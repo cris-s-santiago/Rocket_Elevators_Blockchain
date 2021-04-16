@@ -43,7 +43,7 @@ class QualitySecuritySet extends React.Component {
     console.log("StackId", stackId);
     console.log(drizzleState);
     this.setState({ stackId });
-  };
+  }
 
   saveTransactionAddress (transactionAddress){
     axios.post('' ,{ transactionAddress })
@@ -55,10 +55,9 @@ class QualitySecuritySet extends React.Component {
           console.log("ERROR",error);
       });
     console.log("End of saveTransactionAddress");
-  };
+  }
 
   getTxStatus = () => {
-    console.log("getTxStatus");
     // get the transaction states from the drizzle state
     const { transactions, transactionStack } = this.props.drizzleState;
 

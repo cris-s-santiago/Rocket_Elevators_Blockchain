@@ -44,7 +44,7 @@ class ProjectOfficeSet extends React.Component {
     console.log("StackId", stackId);
     console.log(drizzleState);
     this.setState({ stackId });
-  };
+  }
 
   getTxStatus = () => {
     console.log("getTxStatus");
@@ -54,7 +54,6 @@ class ProjectOfficeSet extends React.Component {
     // get the transaction hash using our saved `stackId`
     const txHash = transactionStack[this.state.stackId];
 
-    var transactionAddress = '0x5ec9260523a370aab3c0f3e6c850c6270bcb2eda065cd28fd974980d3056c915';
     // if (!txHash) console.log("NULL");
     // if transaction hash does not exist, don't display anything
     if (!txHash) return null;
@@ -62,27 +61,11 @@ class ProjectOfficeSet extends React.Component {
     console.log("txHash", txHash);
     console.log("transactions[txHash]", transactions[txHash]);
     
-    console.log("@@@@@@@",this.props.drizzle.web3.eth.getTransaction(transactionAddress).then(console.log));
-
-    // let transaction = this.props.drizzle.web3.eth.getTransaction(transactionAddress, function(err,tx){
-    //   let tx_data = tx.input;
-    //   console.log(tx_data);
-    // });
-    // console.log(this.props.drizzle.web3.toAscii('0x940d9e5d0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000007'));
-    // 0x940d9e5d0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000007
-    
-    // console.log("EYLO", this.props.drizzle.web3.eth.getTransaction(transaction, function(err,tx){
-    //   let tx_data = tx.input;
-    //   let input_data = '0x' + tx_data.slice(10);    
-    //   let params = this.props.drizzle.web3.eth.abi.decodeParameters(['uint256','uint256','uint256','uint256','uint256','uint256'], input_data)
-    //   console.log("A--------------------------", params);
-    
-    // }));
-    // console.log("Drizzle web3", this.web3.eth.getTransactionReceipt(txHash).then(console.log));
     // otherwise, return the transaction status
     return `Transaction Address: ${txHash}`
-    // return `Transaction status: ${transactions[txHash] && transactions[txHash].status}`;
   };
+
+
 
   render() {
     return (
@@ -92,12 +75,11 @@ class ProjectOfficeSet extends React.Component {
           <div className="card-header">
             Project Office
           </div>
-          <div>{this.getTxStatus()}</div>
           <ul className="list-group list-group-flush">
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Batteries: </div>{" "}
-                  <input type="text" name="batteries"  value = {this.state.batteries} onChange={this.handleChange}/>
+                  <input type="text" name="batteries"  value = {this.state.amountOfButtons} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
@@ -122,6 +104,7 @@ class ProjectOfficeSet extends React.Component {
           <button className="btn btn-primary" type="submit">Submit</button>
           </div>
         </div>
+        <div>{this.getTxStatus()}</div>
       </form>
     );
   }

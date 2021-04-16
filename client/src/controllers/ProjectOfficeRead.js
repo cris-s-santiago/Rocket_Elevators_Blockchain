@@ -2,53 +2,46 @@ import React from "react";
 
 class ProjectOfficeRead extends React.Component {
   // state = { dataKeyBattery: null,dataKeyColumns: null, dataKeyElevators: null, dataKeyFloors: null, test: null};
-  state = {dataKeyNewOrder: null};
+  state = {amountOfButtons: null};
   componentDidMount() {
     const { drizzle, drizzleState } = this.props;
     const contract = drizzle.contracts.ProjectOffice;
-    console.log("================================");
-    console.log(drizzle);
-    console.log("----------------");
+    // console.log(contract);
     console.log(drizzleState);
 
-    console.log("Transactions",drizzleState.transactions);
+    // console.log("Contracts",this.props.drizzleState.contracts);
 
-    console.log("My string store",drizzle.contracts.ProjectOffice);
-    console.log("My contract address",drizzle.contracts.ProjectOffice.address);
-    console.log("Contracts",this.props.drizzleState.contracts);
+    const amountOfButtons = contract.methods.amountOfButtons.cacheCall();
+    const amountOfShafts = contract.methods.amountOfShafts.cacheCall();
+    const amountOfControllers = contract.methods.amountOfControllers.cacheCall();
+    const amountOfDoors = contract.methods.amountOfDoors.cacheCall();
+    const amountOfDisplays = contract.methods.amountOfDisplays.cacheCall();
+    const amountOfSpeakers = contract.methods.amountOfSpeakers.cacheCall();
 
-    // let drizzle know we want to watch the `myString` method
-    // const dataKeyBattery = contract.methods["batteries"].cacheCall();
-    // const dataKeyColumns = contract.methods["columns"].cacheCall();
-    // const dataKeyElevators = contract.methods["elevators"].cacheCall();
-    // const dataKeyFloors = contract.methods["floors"].cacheCall();
-    // const dataKeyNewOrder = contract.methods["newOrder"].cacheCall(1,2,3,4);
-    // const dataKeyNewOrder = contract.methods.newOrder.cacheCall();
-    // save the `dataKey` to local component state for later reference
-    // this.setState({ dataKeyBattery, dataKeyColumns, dataKeyElevators,dataKeyFloors});
-    // this.setState({ dataKeyNewOrder });
-
+    this.setState({ amountOfButtons,amountOfShafts,amountOfControllers,amountOfDoors,amountOfDisplays,amountOfSpeakers });
   }
 
   render() {
-    // get the contract state from drizzleState
+    // // get the contract state from drizzleState
     const { ProjectOffice } = this.props.drizzleState.contracts;
 
-    // using the saved `dataKey`, get the variable we're interested in
-    // const batteries = ProjectOffice.batteries[this.state.dataKeyBattery];
-    // const columns = ProjectOffice.columns[this.state.dataKeyColumns];
-    // const elevators = ProjectOffice.elevators[this.state.dataKeyElevators];
-    // const floors = ProjectOffice.floors[this.state.dataKeyFloors];
-    // const test = ProjectOffice.test[this.state.test];
+    const amountOfButtons = ProjectOffice.amountOfButtons[this.state.amountOfButtons];
+    const amountOfShafts = ProjectOffice.amountOfShafts[this.state.amountOfShafts];
+    const amountOfControllers = ProjectOffice.amountOfControllers[this.state.amountOfControllers];
+    const amountOfDoors = ProjectOffice.amountOfDoors[this.state.amountOfDoors];
+    const amountOfDisplays = ProjectOffice.amountOfDisplays[this.state.amountOfDisplays];
+    const amountOfSpeakers = ProjectOffice.amountOfSpeakers[this.state.amountOfSpeakers];
+
 
     // if it exists, then we display its value
     return (
       <div className="container">
+        {/* <p>amountOfButtons: {amountOfButtons && amountOfButtons.value}</p> */}
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">Controllers</th>
               <th scope="col">Shafts</th>
+              <th scope="col">Controllers</th>
               <th scope="col">Doors</th>
               <th scope="col">Buttons</th>
               <th scope="col">Displays</th>
@@ -57,11 +50,12 @@ class ProjectOfficeRead extends React.Component {
           </thead>
           <tbody>
             <tr>
-              {/* <td>{batteries && batteries.value}</td>
-              <td>{columns && columns.value}</td>
-              <td>{elevators && elevators.value}</td>
-              <td>{floors && floors.value}</td> */}
-              {/* <td>{test && test.value}</td> */}
+              <td>{amountOfShafts && amountOfShafts.value}</td>
+              <td>{amountOfControllers && amountOfControllers.value}</td>
+              <td>{amountOfDoors && amountOfDoors.value}</td>
+              <td>{amountOfButtons && amountOfButtons.value}</td>
+              <td>{amountOfDisplays && amountOfDisplays.value}</td>
+              <td>{amountOfSpeakers && amountOfSpeakers.value}</td>
             </tr>
           </tbody>
         </table>
