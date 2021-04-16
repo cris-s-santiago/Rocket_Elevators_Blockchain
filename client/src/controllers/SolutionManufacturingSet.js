@@ -16,11 +16,7 @@ class SolutionManufacturingSet extends React.Component {
     const {aluminiumBars, stainlessSteelSheets, bumperRubberBands, displayLeds, springs, speakers} = this.state
     event.preventDefault()
     this.setValue(aluminiumBars, stainlessSteelSheets, bumperRubberBands, displayLeds, springs, speakers);
-    // this.getTxStatus();
-    alert(`
-      ____Your Details____\n
-      Controllers : ${aluminiumBars}
-    `)
+   
   }
 
   handleChange(event){
@@ -35,19 +31,16 @@ class SolutionManufacturingSet extends React.Component {
   setValue (aluminiumBars, stainlessSteelSheets, bumperRubberBands, displayLeds, springs, speakers) {
     const { drizzle, drizzleState } = this.props;
     const contract = drizzle.contracts.SolutionManufacturing;
-    console.log("New order SetValue");
 
     // let drizzle know we want to call the `set` method with `value`
     const stackId = contract.methods["getCommand"].cacheSend(aluminiumBars, stainlessSteelSheets, bumperRubberBands, displayLeds, springs, speakers, { from: drizzleState.accounts[0] });
 
     // save the `stackId` for later reference
-    console.log("StackId", stackId);
-    console.log(drizzleState);
     this.setState({ stackId });
-  };
+  }
 
   saveTransactionAddress (transactionAddress){
-    axios.post('' ,{ transactionAddress })
+    axios.post('https://rocketblockchain.azurewebsites.net/api/blockchains',{ nodeName: 'SolutionManufacturing', address: transactionAddress })
       .then(res => {
         console.log("Response", res);
         console.log("Response Data", res.data);
@@ -56,7 +49,7 @@ class SolutionManufacturingSet extends React.Component {
           console.log("ERROR",error);
       });
     console.log("End of saveTransactionAddress");
-  };
+  }
 
   getTxStatus = () => {
     console.log("getTxStatus");
@@ -73,7 +66,7 @@ class SolutionManufacturingSet extends React.Component {
     this.saveTransactionAddress(txHash);
     // otherwise, return the transaction status
     return `Transaction Address: ${txHash}`
-  };
+  }
 
   render() {
     return (
@@ -88,37 +81,37 @@ class SolutionManufacturingSet extends React.Component {
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Aluminium Bars: </div>{" "}
-                  <input type="text" name="aluminiumBars"  value = {this.state.aluminiumBars} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="aluminiumBars"  value = {this.state.aluminiumBars} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Stainless Steel Sheets: </div>{" "}
-                  <input type="text" name="stainlessSteelSheets"  value = {this.state.stainlessSteelSheets} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="stainlessSteelSheets"  value = {this.state.stainlessSteelSheets} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Bumper Rubber Bands: </div>{" "}
-                  <input type="text" name="bumperRubberBands"  value = {this.state.bumperRubberBands} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="bumperRubberBands"  value = {this.state.bumperRubberBands} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Display Leds: </div>{" "}
-                  <input type="text" name="displayLeds"  value = {this.state.displayLeds} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="displayLeds"  value = {this.state.displayLeds} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Springs: </div>{" "}
-                  <input type="text" name="springs"  value = {this.state.springs} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="springs"  value = {this.state.springs} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Speakers: </div>{" "}
-                  <input type="text" name="speakers"  value = {this.state.speakers} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="speakers"  value = {this.state.speakers} onChange={this.handleChange}/>
                 </div>
             </li>
           </ul>
@@ -126,7 +119,7 @@ class SolutionManufacturingSet extends React.Component {
           </div>
         </div>
       </form>
-    );
+    )
   }
 }
 

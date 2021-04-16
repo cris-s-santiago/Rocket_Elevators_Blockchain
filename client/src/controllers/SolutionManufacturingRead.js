@@ -1,65 +1,64 @@
 import React from "react";
 
 class SolutionManufacturingRead extends React.Component {
-  // state = { dataKeyBattery: null,dataKeyColumns: null, dataKeyElevators: null, dataKeyFloors: null, test: null};
-  state = { dataKey: null };
-  componentDidMount() {
-    const { drizzle, drizzleState } = this.props;
-    const contract = drizzle.contracts.SolutionManufacturing;
-    console.log("================================");
-    console.log(drizzle);
-    console.log("----------------");
-    console.log(drizzleState);
-
-    console.log("Transactions",drizzleState.transactions);
-
-    console.log("Solution Manu--",drizzle.contracts.SolutionManufacturing);
-    console.log("My contract address",drizzle.contracts.SolutionManufacturing.address);
-    console.log("Contracts",this.props.drizzleState.contracts);
-    // const dataKey = contract.methods["getCommand"].cacheCall();
-    // this.setState({ dataKey });
-    // console.log("Datakey:",this.state.dataKey);
+    state = {dataKeyElevatorCab: null, dataKeyDoors: null, dataKeyController: null, dataKeyControlPanel: null, dataKeyDisplay: null, dataKeyMusicSystem: null};
+  
+    componentDidMount() {
+      const { drizzle } = this.props;
+      const contract = drizzle.contracts.SolutionManufacturing;
+  
+      // let drizzle know we want to watch the `myString` method
+      const dataKeyElevatorCab = contract.methods["ElevatorCab"].cacheCall();
+      const dataKeyDoors = contract.methods["Doors"].cacheCall();
+      const dataKeyController = contract.methods["Controller"].cacheCall();
+      const dataKeyControlPanel = contract.methods["ControlPanel"].cacheCall();
+      const dataKeyDisplay = contract.methods["Display"].cacheCall();
+      const dataKeyMusicSystem = contract.methods["MusicSystem"].cacheCall();
+  
+      // save the `dataKey` to local component state for later reference
+      this.setState({ dataKeyElevatorCab, dataKeyDoors, dataKeyController, dataKeyControlPanel, dataKeyDisplay, dataKeyMusicSystem });
+    }
+  
+    render() {
+      // get the contract state from drizzleState
+      const { SolutionManufacturing } = this.props.drizzleState.contracts;
+  
+      // using the saved `dataKey`, get the variable we're interested in
+      const elevatorCab = SolutionManufacturing.ElevatorCab[this.state.dataKeyElevatorCab];
+      const doors = SolutionManufacturing.Doors[this.state.dataKeyDoors];
+      const controller = SolutionManufacturing.Controller[this.state.dataKeyController];
+      const controlPanel = SolutionManufacturing.ControlPanel[this.state.dataKeyControlPanel];
+      const display = SolutionManufacturing.Display[this.state.dataKeyDisplay];
+      const musicSystem = SolutionManufacturing.MusicSystem[this.state.dataKeyMusicSystem];
+  
+      // if it exists, then we display its value
+      return (
+        <div className="container">
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Elevator Cabe</th>
+                <th scope="col">Doors</th>
+                <th scope="col">Controller</th>
+                <th scope="col">Control Panel</th>
+                <th scope="col">Display</th>
+                <th scope="col">MusicSystem</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{elevatorCab && elevatorCab.value}</td>
+                <td>{doors && doors.value}</td>
+                <td>{controller && controller.value}</td>
+                <td>{controlPanel && controlPanel.value}</td>
+                <td>{display && display.value}</td>
+                <td>{musicSystem && musicSystem.value}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )
+    }
   }
-
-  render() {
-    // get the contract state from drizzleState
-    const { SolutionManufacturing } = this.props.drizzleState.contracts;
-    // const newCommand = SolutionManufacturing.getCommand[this.state.dataKey];
-
-    // using the saved `dataKey`, get the variable we're interested in
-    // const batteries = MaterialProvider.batteries[this.state.dataKeyBattery];
-    // const columns = MaterialProvider.columns[this.state.dataKeyColumns];
-    // const elevators = MaterialProvider.elevators[this.state.dataKeyElevators];
-    // const floors = MaterialProvider.floors[this.state.dataKeyFloors];
-    // const test = MaterialProvider.test[this.state.test];
-
-    // if it exists, then we display its value
-    return (
-      <div className="container">
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">Controllers</th>
-              <th scope="col">Shafts</th>
-              <th scope="col">Doors</th>
-              <th scope="col">Buttons</th>
-              <th scope="col">Displays</th>
-              <th scope="col">New command -- </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {/* <td>{batteries && batteries.value}</td>
-              <td>{columns && columns.value}</td>
-              <td>{elevators && elevators.value}</td>
-              <td>{floors && floors.value}</td> */}
-              {/* <td>{newCommand && newCommand.value}</td> */}
-            </tr>
-          </tbody>
-        </table>
-      </div>
-		);
-  }
-}
 
 export default SolutionManufacturingRead;

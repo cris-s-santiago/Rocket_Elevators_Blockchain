@@ -2,6 +2,13 @@
 pragma solidity >=0.5.0;
 
 contract SolutionManufacturing {
+
+    uint public ElevatorCab = 0;
+    uint public Doors = 0;
+    uint public Controller = 0;
+    uint public ControlPanel = 0;
+    uint public Display = 0;
+    uint public MusicSystem = 0;
     
     struct Products{
         
@@ -82,6 +89,14 @@ contract SolutionManufacturing {
         new_product.controlPanel = nbControlPanel;
         new_product.display = nbDisplay;
         new_product.musicSystem = nbMusicSystem;
+
+        ElevatorCab = new_product.elevatorCab;
+        Doors = new_product.doors;
+        Controller = new_product.controller;
+        ControlPanel = new_product.controlPanel;
+        Display = new_product.display;
+        MusicSystem = new_product.musicSystem;
+
         bytes32 commandId = getUniqueHash(new_product.elevatorCab, new_product.doors, new_product.controller, new_product.controlPanel, new_product.display, new_product.musicSystem);
         new_product.commandId = commandId;
         productListCount++;
@@ -90,4 +105,3 @@ contract SolutionManufacturing {
         return (new_product.elevatorCab, new_product.doors, new_product.controller, new_product.controlPanel, new_product.display, new_product.musicSystem);
     }
 }
-

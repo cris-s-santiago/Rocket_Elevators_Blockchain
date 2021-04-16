@@ -32,11 +32,11 @@ contract QualitySecurity {
 
     uint qualityTestId = 1;
     
-    QualityTest[] qualityList;
+    QualityTest[] public qualityList;
     
-    Certificate[] certificateList;
+    Certificate[] public certificateList;
     
-    Permit[] permitList;
+    Permit[] public permitList;
     
     string[] employeeList = ["Felix","Claude","Tommy","Ines","Eric","Christiane"];
     uint employeeNumber = 0;
