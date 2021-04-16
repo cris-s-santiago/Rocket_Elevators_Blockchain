@@ -9,7 +9,6 @@ import ProjectOffice from "./contracts/ProjectOffice.json";
 import MaterialProvider from "./contracts/MaterialProvider.json";
 import SolutionManufacturing from "./contracts/SolutionManufacturing.json";
 import QualitySecurity from "./contracts/QualitySecurity.json";
-
 // let drizzle know what contracts we want and how to access our test blockchain
 const options = {
 	contracts: [ProjectOffice, MaterialProvider, SolutionManufacturing, QualitySecurity],

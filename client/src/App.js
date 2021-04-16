@@ -7,6 +7,7 @@ import SolutionManufacturingRead from "./controllers/SolutionManufacturingRead";
 import SolutionManufacturingSet from "./controllers/SolutionManufacturingSet";
 import QualitySecuritySet from "./controllers/QualitySecuritySet";
 import QualitySecurityRead from "./controllers/QualitySecurityRead";
+import Address from "./controllers/Address";
 import "./App.css";
 
 class App extends Component {
@@ -65,6 +66,10 @@ class App extends Component {
         <h1 className ="display-3">ROCKET ELEVATORS BLOCKCHAIN</h1>
       </nav>
       <div className="App">
+        <Address 
+          drizzle={this.props.drizzle}
+          drizzleState={this.state.drizzleState}
+        />
         <ProjectOfficeSet drizzle={this.props.drizzle}
           drizzleState={this.state.drizzleState}
         />

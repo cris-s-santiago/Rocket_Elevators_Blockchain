@@ -60,7 +60,6 @@ class ProjectOfficeSet extends React.Component {
   }
 
   getTxStatus = () => {
-    console.log("getTxStatus");
     // get the transaction states from the drizzle state
     const { transactions, transactionStack } = this.props.drizzleState;
 
@@ -70,10 +69,21 @@ class ProjectOfficeSet extends React.Component {
     // if (!txHash) console.log("NULL");
     // if transaction hash does not exist, don't display anything
     if (!txHash) return null;
-    this.saveTransactionAddress(txHash);
+    if (transactions[txHash] == null) return null;
+    console.log(txHash.length);
+    this.setState({stackId: null});
+    // if(this.props.drizzle)
+    if (txHash.length > 32){
+      this.saveTransactionAddress(txHash);
+    }
+    console.log("prop",this.props.drizzle.web3.eth.getTransactionReceipt(txHash));
+    console.log(transactions[txHash][0]);
     console.log("txHash", txHash);
     console.log("transactions[txHash]", transactions[txHash]);
-    
+    // console.log(transactions[txHash]['status']);
+    // this.saveTransactionAddress(txHash);
+
+    // setTimeout(() => { console.log("World!"); }, 2000);
     // otherwise, return the transaction status
     return `Transaction Address: ${txHash}`
   };
