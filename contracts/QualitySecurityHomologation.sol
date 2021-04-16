@@ -6,7 +6,7 @@ contract Quality {
     address qualityId = msg.sender;
     
     struct QualityTest{
-        uint commandId;
+        uint qualityTestId;
         string object;
         uint objectCount;
         string employee;
@@ -29,7 +29,7 @@ contract Quality {
         uint permitDate;
     }
 
-    uint private commandID = 1;
+    uint qualityTestId = 1;
     
     QualityTest[] qualityList;
     
@@ -37,37 +37,27 @@ contract Quality {
     
     Permit[] permitList;
     
-    function testDoor(uint number) private{
-        QualityTest memory new_quality;
-        new_quality.commandId = commandID;
-        new_quality.object = "Door";
-        new_quality.objectCount = number;
-        new_quality.employee = "Eric";
-        new_quality.testDate = block.timestamp;
-        commandID++;
-        qualityList.push(new_quality);
-        
+    string[] employeeList = ["Felix","Claude","Tommy","Ines","Eric","Christiane"];
+    uint employeeNumber = 0;
+
+
+    function selectEmployee() private returns(string memory){
+        string memory employee = employeeList[employeeNumber];
+        employeeNumber++;
+        if (employeeNumber > 5) {
+            employeeNumber = 0;
+        }
+        return employee;
     }
     
-    function testCable(uint number) private{
+    function makeTest(string memory item,uint number) private{
         QualityTest memory new_quality;
-        new_quality.commandId = commandID;
-        new_quality.object = "Cable";
+        new_quality.qualityTestId = qualityTestId;
+        new_quality.object = item;
         new_quality.objectCount = number;
-        new_quality.employee = "Ines";
+        new_quality.employee = selectEmployee();
         new_quality.testDate = block.timestamp;
-        commandID++;
-        qualityList.push(new_quality);
-    }
-    
-    function testBrake(uint number) private{
-        QualityTest memory new_quality;
-        new_quality.commandId = commandID;
-        new_quality.object = "Brake";
-        new_quality.objectCount = number;
-        new_quality.employee = "Claude";
-        new_quality.testDate = block.timestamp;
-        commandID++;
+        qualityTestId++;
         qualityList.push(new_quality);
     }
     
@@ -82,7 +72,7 @@ contract Quality {
             Certificate memory new_certificate;
             new_certificate.certificateId = genRandom();
             new_certificate.certificateType = "Column";
-            new_certificate.employeeCertificate = "Tommy";
+            new_certificate.employeeCertificate = selectEmployee();
             new_certificate.certificateDate = block.timestamp + i;
             certificateList.push(new_certificate);
         }
@@ -93,7 +83,7 @@ contract Quality {
             Permit memory new_permit;
             new_permit.permitId = genRandom();
             new_permit.permitType = "Battery";
-            new_permit.employeePermit = "Felix";
+            new_permit.employeePermit = selectEmployee();
             new_permit.permitDate = block.timestamp + i;
             permitList.push(new_permit);
         }
@@ -126,11 +116,11 @@ contract Quality {
     
     
      function createQuality(uint door, uint cable, uint brake, uint battery, uint column) public{
-         testDoor(door);
-         testCable(cable);
-         testBrake(brake);
-         makeCertificate(column);
-         makePermit(battery);
+        makeTest("Door",door);
+        makeTest("Brake",brake);
+        makeTest("Cable",cable);
+        makeCertificate(column);
+        makePermit(battery);
          
          
      }
