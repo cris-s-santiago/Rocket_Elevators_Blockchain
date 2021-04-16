@@ -1,42 +1,39 @@
 import React from "react";
 
 class ProjectOfficeRead extends React.Component {
-  // state = { dataKeyBattery: null,dataKeyColumns: null, dataKeyElevators: null, dataKeyFloors: null, test: null};
-  state = {amountOfButtons: null};
-  componentDidMount() {
-    const { drizzle, drizzleState } = this.props;
-    const contract = drizzle.contracts.ProjectOffice;
-    // console.log(contract);
-    console.log(drizzleState);
+	state = { dataKeyControllers: null, dataKeyShafts: null, dataKeyDoors: null, dataKeyButtons: null, dataKeyDisplays: null, dataKeySpeakers: null };
 
-    // console.log("Contracts",this.props.drizzleState.contracts);
+	componentDidMount() {
+		const { drizzle } = this.props;
+		const contract = drizzle.contracts.ProjectOffice;
 
-    const amountOfButtons = contract.methods.amountOfButtons.cacheCall();
-    const amountOfShafts = contract.methods.amountOfShafts.cacheCall();
-    const amountOfControllers = contract.methods.amountOfControllers.cacheCall();
-    const amountOfDoors = contract.methods.amountOfDoors.cacheCall();
-    const amountOfDisplays = contract.methods.amountOfDisplays.cacheCall();
-    const amountOfSpeakers = contract.methods.amountOfSpeakers.cacheCall();
+		// let drizzle know we want to watch the `myString` method
+		const dataKeyControllers = contract.methods["Controllers"].cacheCall();
+    const dataKeyShafts = contract.methods["Shafts"].cacheCall();
+    const dataKeyDoors = contract.methods["Doors"].cacheCall();
+    const dataKeyButtons = contract.methods["Buttons"].cacheCall();
+    const dataKeyDisplays = contract.methods["Displays"].cacheCall();
+    const dataKeySpeakers = contract.methods["Speakers"].cacheCall();
 
-    this.setState({ amountOfButtons,amountOfShafts,amountOfControllers,amountOfDoors,amountOfDisplays,amountOfSpeakers });
-  }
+		// save the `dataKey` to local component state for later reference
+		this.setState({ dataKeyControllers, dataKeyShafts, dataKeyDoors, dataKeyButtons, dataKeyDisplays, dataKeySpeakers });
+	}
 
-  render() {
-    // // get the contract state from drizzleState
-    const { ProjectOffice } = this.props.drizzleState.contracts;
+	render() {
+		// get the contract state from drizzleState
+		const { ProjectOffice } = this.props.drizzleState.contracts;
 
-    const amountOfButtons = ProjectOffice.amountOfButtons[this.state.amountOfButtons];
-    const amountOfShafts = ProjectOffice.amountOfShafts[this.state.amountOfShafts];
-    const amountOfControllers = ProjectOffice.amountOfControllers[this.state.amountOfControllers];
-    const amountOfDoors = ProjectOffice.amountOfDoors[this.state.amountOfDoors];
-    const amountOfDisplays = ProjectOffice.amountOfDisplays[this.state.amountOfDisplays];
-    const amountOfSpeakers = ProjectOffice.amountOfSpeakers[this.state.amountOfSpeakers];
+		// using the saved `dataKey`, get the variable we're interested in
+		const controllers = ProjectOffice.Controllers[this.state.dataKeyControllers];
+    const shafts = ProjectOffice.Shafts[this.state.dataKeyShafts];
+    const doors = ProjectOffice.Doors[this.state.dataKeyDoors];
+    const buttons = ProjectOffice.Buttons[this.state.dataKeyButtons];
+    const displays = ProjectOffice.Displays[this.state.dataKeyDisplays];
+    const speakers = ProjectOffice.Speakers[this.state.dataKeySpeakers];
 
-
-    // if it exists, then we display its value
-    return (
-      <div className="container">
-        {/* <p>amountOfButtons: {amountOfButtons && amountOfButtons.value}</p> */}
+		// if it exists, then we display its value
+		return (
+			<div className="container">
         <table className="table">
           <thead>
             <tr>
@@ -50,18 +47,18 @@ class ProjectOfficeRead extends React.Component {
           </thead>
           <tbody>
             <tr>
-              <td>{amountOfShafts && amountOfShafts.value}</td>
-              <td>{amountOfControllers && amountOfControllers.value}</td>
-              <td>{amountOfDoors && amountOfDoors.value}</td>
-              <td>{amountOfButtons && amountOfButtons.value}</td>
-              <td>{amountOfDisplays && amountOfDisplays.value}</td>
-              <td>{amountOfSpeakers && amountOfSpeakers.value}</td>
+              <td>{controllers && controllers.value}</td>
+              <td>{shafts && shafts.value}</td>
+              <td>{doors && doors.value}</td>
+              <td>{buttons && buttons.value}</td>
+              <td>{displays && displays.value}</td>
+              <td>{speakers && speakers.value}</td>
             </tr>
           </tbody>
         </table>
       </div>
 		);
-  }
+	}
 }
 
 export default ProjectOfficeRead;

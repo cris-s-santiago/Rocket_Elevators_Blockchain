@@ -79,25 +79,25 @@ class ProjectOfficeSet extends React.Component {
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Batteries: </div>{" "}
-                  <input type="text" name="batteries"  value = {this.state.amountOfButtons} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="batteries"  value = {this.state.batteries} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Columns: </div>{" "}
-                  <input type="text" name="columns"  value = {this.state.columns} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="columns"  value = {this.state.columns} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Elevators: </div>{" "}
-                  <input type="text" name="elevators"  value = {this.state.elevators} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="elevators"  value = {this.state.elevators} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Floors: </div>{" "}
-                  <input type="text" name="floors"  value = {this.state.floors} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="floors"  value = {this.state.floors} onChange={this.handleChange}/>
                 </div>
             </li>
           </ul>
