@@ -8,16 +8,19 @@ class ProjectOfficeSet extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  state = { stackId: null };
+
   handleSubmit(event){
     const { batteries, columns, elevators, floors} = this.state
     event.preventDefault()
-    this.setValue(batteries, columns, elevators, floors, "setData");
+    this.setValue(batteries, columns, elevators, floors);
+    // this.getTxStatus();
     alert(`
       ____Your Details____\n
-      Email : ${batteries}
+      Batteries : ${batteries}
     `)
   }
-  
+
   handleChange(event){
     this.setState({
       // Computed property names
@@ -25,31 +28,41 @@ class ProjectOfficeSet extends React.Component {
       [event.target.name] : event.target.value
     })
   }
-  state = { stackId: null };
 
-  setValue (batteries, columns, elevators, floors, methodName) {
+
+  setValue (batteries, columns, elevators, floors) {
     const { drizzle, drizzleState } = this.props;
     const contract = drizzle.contracts.MyStringStore;
+    console.log("New order SetValue");
 
     // let drizzle know we want to call the `set` method with `value`
-    const stackId = contract.methods[methodName].cacheSend(batteries, columns, elevators, floors, { from: drizzleState.accounts[0] });
+    const stackId = contract.methods["newOrder"].cacheSend(batteries, columns, elevators, floors, { from: drizzleState.accounts[0] });
 
+    // const stackId = contract.methods["newOrder"].cacheSend(batteries, columns, elevators, floors, { from: drizzleState.accounts[0] });
+    // const stackId = drizzle.contracts.MyStringStore.methods.newOrder(batteries, columns, elevators, floors).send({from: drizzleState.accounts[0]})
     // save the `stackId` for later reference
+    console.log("StackId", stackId);
+    console.log(drizzleState);
     this.setState({ stackId });
   };
 
   getTxStatus = () => {
+    console.log("getTxStatus");
     // get the transaction states from the drizzle state
     const { transactions, transactionStack } = this.props.drizzleState;
 
     // get the transaction hash using our saved `stackId`
     const txHash = transactionStack[this.state.stackId];
 
+    // if (!txHash) console.log("NULL");
     // if transaction hash does not exist, don't display anything
     if (!txHash) return null;
 
+    console.log("txHash", txHash);
+    console.log("transactions[txHash]", transactions[txHash]);
     // otherwise, return the transaction status
-    return `Transaction status: ${transactions[txHash] && transactions[txHash].status}`;
+    return `Transaction Address: ${txHash}`
+    // return `Transaction status: ${transactions[txHash] && transactions[txHash].status}`;
   };
 
   render() {
@@ -60,11 +73,12 @@ class ProjectOfficeSet extends React.Component {
           <div className="card-header">
             Input your project data
           </div>
+          <div>{this.getTxStatus()}</div>
           <ul className="list-group list-group-flush">
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Batteries: </div>{" "}
-                  <input type="text" name="batteries"  value = {this.state.batteries} onChange={this.handleChange}/>              
+                  <input type="text" name="batteries"  value = {this.state.batteries} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">

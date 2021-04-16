@@ -1,32 +1,52 @@
+//pragma solidity >=0.7.0 <0.9.0;
 pragma solidity >=0.5.0;
 
-contract MyStringStore {
-  uint256 public batteries = 30;
-  uint256 public columns = 25;
-  uint256 public elevators = 0;
-  uint256 public floors = 0;
-  
-  function setData(uint256 a, uint256 b, uint256 c, uint256 d) public {
-    batteries = a;
-    columns = b;
-    elevators = c;
-    floors = d;
-  }
+contract ProjectOffice {
 
-  function setBatteries(uint256 x, uint256 y) public {
-    batteries = x;
-    columns = y;
-  }
+   // List of components
+    struct ComponentStruct {
+        uint256 amountOfShafts;
+        uint256 amountOfControllers;
+        uint256 amountOfDoors;
+        uint256 amountOfButtons;
+        uint256 amountOfDisplays;
+        uint256 amountOfSpeakers;
+    }
+    uint public batteriesData = 30;
+    uint public columnsData = 25;
+    uint public elevatorsData = 0;
+    
+    uint public floorsData = 0;
 
-  // function setColumns(int x) public {
-  //   columns = x;
-  // }
+    function setData(uint256 a, uint256 b, uint256 c, uint256 d) public {
+      batteriesData = a;
+      columnsData = b;
+      columnsData = c;
+      floorsData = d;
 
-  // function setElevators(int x) public {
-  //   elevators = x;
-  // }
+      newOrder(batteriesData, columnsData, columnsData, floorsData);
+    }
 
-  // function setFloors(int x) public {
-  //   floors = x;
-  // }
+    bytes32[] public orderIndex;
+    mapping(uint => ComponentStruct) componentStructs;
+    uint public orderCount;
+
+    function getContractAddress()public view returns(address){
+        return address(this);
+    }
+
+    function newOrder (uint batteries, uint columns, uint elevators, uint floors) public returns(uint,uint,uint,uint,uint,uint) {
+        uint totalColumns = columns* batteries;
+        uint totalElevators = elevators*totalColumns;
+        uint id = orderCount++;
+
+        componentStructs[id].amountOfShafts = totalElevators;
+        componentStructs[id].amountOfControllers = batteries;
+        componentStructs[id].amountOfDoors = totalElevators*2;
+        componentStructs[id].amountOfButtons = floors*totalElevators;
+        componentStructs[id].amountOfDisplays = floors+totalElevators;
+        componentStructs[id].amountOfSpeakers = (totalElevators*2)+floors;
+
+        return (componentStructs[id].amountOfShafts,componentStructs[id].amountOfControllers,componentStructs[id].amountOfDoors,componentStructs[id].amountOfButtons,componentStructs[id].amountOfDisplays,componentStructs[id].amountOfSpeakers);
+    }
 }
