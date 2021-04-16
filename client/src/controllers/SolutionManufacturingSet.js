@@ -47,7 +47,7 @@ class SolutionManufacturingSet extends React.Component {
   }
 
   saveTransactionAddress (transactionAddress){
-    axios.post('' ,{ transactionAddress })
+    axios.post('https://rocketblockchain.azurewebsites.net/api/blockchains',{ nodeName: 'SolutionManufacturing', address: transactionAddress })
       .then(res => {
         console.log("Response", res);
         console.log("Response Data", res.data);
@@ -66,7 +66,7 @@ class SolutionManufacturingSet extends React.Component {
     const txHash = transactionStack[this.state.stackId];
     // if transaction hash does not exist, don't display anything
     if (!txHash) return null;
-
+    this.saveTransactionAddress(txHash);
     console.log("txHash", txHash);
     console.log("transactions[txHash]", transactions[txHash]);
     this.saveTransactionAddress(txHash);

@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 class ProjectOfficeSet extends React.Component {
   constructor(props){
@@ -46,6 +47,18 @@ class ProjectOfficeSet extends React.Component {
     this.setState({ stackId });
   }
 
+  saveTransactionAddress (transactionAddress){
+    axios.post('https://rocketblockchain.azurewebsites.net/api/blockchains',{ nodeName: 'ProjectOffice', address: transactionAddress })
+      .then(res => {
+        console.log("Response", res);
+        console.log("Response Data", res.data);
+      })
+      .catch(function(error){
+          console.log("ERROR",error);
+      });
+    console.log("End of saveTransactionAddress");
+  }
+
   getTxStatus = () => {
     console.log("getTxStatus");
     // get the transaction states from the drizzle state
@@ -57,7 +70,7 @@ class ProjectOfficeSet extends React.Component {
     // if (!txHash) console.log("NULL");
     // if transaction hash does not exist, don't display anything
     if (!txHash) return null;
-
+    this.saveTransactionAddress(txHash);
     console.log("txHash", txHash);
     console.log("transactions[txHash]", transactions[txHash]);
     

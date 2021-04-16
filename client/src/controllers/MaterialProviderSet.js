@@ -47,7 +47,7 @@ class MaterialProviderSet extends React.Component {
   }
 
   saveTransactionAddress (transactionAddress){
-    axios.post('' ,{ transactionAddress })
+    axios.post('https://rocketblockchain.azurewebsites.net/api/blockchains',{ nodeName: 'MaterialProvider', address: transactionAddress })
       .then(res => {
         console.log("Response", res);
         console.log("Response Data", res.data);
@@ -62,7 +62,6 @@ class MaterialProviderSet extends React.Component {
     console.log("getTxStatus");
     // get the transaction states from the drizzle state
     const { transactions, transactionStack } = this.props.drizzleState;
-
     // get the transaction hash using our saved `stackId`
     const txHash = transactionStack[this.state.stackId];
 
@@ -73,6 +72,7 @@ class MaterialProviderSet extends React.Component {
     console.log("txHash", txHash);
     console.log("transactions[txHash]", transactions[txHash]);
     this.saveTransactionAddress(txHash);
+    
     // otherwise, return the transaction status
     return `Transaction Address: ${txHash}`
     // return `Transaction status: ${transactions[txHash] && transactions[txHash].status}`;
