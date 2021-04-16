@@ -15,11 +15,7 @@ class MaterialProviderSet extends React.Component {
     const { controllers, shafts, doors, buttons, displays, speakers} = this.state
     event.preventDefault()
     this.setValue(controllers, shafts, doors, buttons, displays, speakers);
-    // this.getTxStatus();
-    alert(`
-      ____Your Details____\n
-      Controllers : ${controllers}
-    `)
+    
   }
 
   handleChange(event){
@@ -34,20 +30,16 @@ class MaterialProviderSet extends React.Component {
   setValue (controllers, shafts, doors, buttons, displays, speakers) {
     const { drizzle, drizzleState } = this.props;
     const contract = drizzle.contracts.MaterialProvider;
-    console.log("New order SetValue");
 
     // let drizzle know we want to call the `set` method with `value`
     const stackId = contract.methods["createMaterials"].cacheSend(controllers, shafts, doors, buttons, displays, speakers, { from: drizzleState.accounts[0] });
 
-    // const stackId = drizzle.contracts.MaterialProvider.methods.newOrder(controllers, shafts, doors, buttons).send({from: drizzleState.accounts[0]})
     // save the `stackId` for later reference
-    console.log("StackId", stackId);
-    console.log(drizzleState);
     this.setState({ stackId });
-  };
+  }
 
   saveTransactionAddress (transactionAddress){
-    axios.post('' ,{ transactionAddress })
+    axios.post('https://rocketblockchain.azurewebsites.net/api/blockchains',{ nodeName: 'MaterialProvider', address: transactionAddress })
       .then(res => {
         console.log("Response", res);
         console.log("Response Data", res.data);
@@ -56,7 +48,7 @@ class MaterialProviderSet extends React.Component {
           console.log("ERROR",error);
       });
     console.log("End of saveTransactionAddress");
-  };
+  }
 
   getTxStatus = () => {
     console.log("getTxStatus");
@@ -76,7 +68,7 @@ class MaterialProviderSet extends React.Component {
     // otherwise, return the transaction status
     return `Transaction Address: ${txHash}`
     // return `Transaction status: ${transactions[txHash] && transactions[txHash].status}`;
-  };
+  }
 
   render() {
     return (
@@ -129,7 +121,7 @@ class MaterialProviderSet extends React.Component {
           </div>
         </div>
       </form>
-    );
+    )
   }
 }
 

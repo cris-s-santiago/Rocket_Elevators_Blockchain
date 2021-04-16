@@ -15,11 +15,6 @@ class QualitySecuritySet extends React.Component {
     const {door, cable, brake, battery, column} = this.state
     event.preventDefault()
     this.setValue(door, cable, brake, battery, column);
-    // this.getTxStatus();
-    alert(`
-      ____Your Details____\n
-      Door : ${door}
-    `)
   }
 
   handleChange(event){
@@ -34,19 +29,16 @@ class QualitySecuritySet extends React.Component {
   setValue (door, cable, brake, battery, column) {
     const { drizzle, drizzleState } = this.props;
     const contract = drizzle.contracts.QualitySecurity;
-    console.log("New order SetValue");
 
     // let drizzle know we want to call the `set` method with `value`
     const stackId = contract.methods["createQuality"].cacheSend(door, cable, brake, battery, column, { from: drizzleState.accounts[0] });
 
     // save the `stackId` for later reference
-    console.log("StackId", stackId);
-    console.log(drizzleState);
     this.setState({ stackId });
-  };
+  }
 
   saveTransactionAddress (transactionAddress){
-    axios.post('' ,{ transactionAddress })
+    axios.post('https://rocketblockchain.azurewebsites.net/api/blockchains',{ nodeName: 'QualitySecurity', address: transactionAddress })
       .then(res => {
         console.log("Response", res);
         console.log("Response Data", res.data);
@@ -55,7 +47,7 @@ class QualitySecuritySet extends React.Component {
           console.log("ERROR",error);
       });
     console.log("End of saveTransactionAddress");
-  };
+  }
 
   getTxStatus = () => {
     console.log("getTxStatus");
@@ -75,7 +67,7 @@ class QualitySecuritySet extends React.Component {
     // otherwise, return the transaction status
     return `Transaction Address: ${txHash}`
     // return `Transaction status: ${transactions[txHash] && transactions[txHash].status}`;
-  };
+  }
 
   render() {
     return (
@@ -90,31 +82,31 @@ class QualitySecuritySet extends React.Component {
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Doors: </div>{" "}
-                  <input type="text" name="door"  value = {this.state.door} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="door"  value = {this.state.door} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Cable: </div>{" "}
-                  <input type="text" name="cable"  value = {this.state.cable} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="cable"  value = {this.state.cable} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Brake: </div>{" "}
-                  <input type="text" name="brake"  value = {this.state.brake} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="brake"  value = {this.state.brake} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Battery: </div>{" "}
-                  <input type="text" name="battery"  value = {this.state.battery} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="battery"  value = {this.state.battery} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Column: </div>{" "}
-                  <input type="text" name="column"  value = {this.state.column} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="column"  value = {this.state.column} onChange={this.handleChange}/>
                 </div>
             </li>
           </ul>
@@ -122,7 +114,7 @@ class QualitySecuritySet extends React.Component {
           </div>
         </div>
       </form>
-    );
+    )
   }
 }
 

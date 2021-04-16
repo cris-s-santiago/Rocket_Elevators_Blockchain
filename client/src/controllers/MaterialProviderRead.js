@@ -61,7 +61,7 @@ class MaterialProviderRead extends React.Component {
           </tbody>
         </table>
       </div>
-		);
+		)
 	}
 }
 

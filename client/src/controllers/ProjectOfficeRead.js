@@ -57,7 +57,7 @@ class ProjectOfficeRead extends React.Component {
           </tbody>
         </table>
       </div>
-		);
+		)
 	}
 }
 

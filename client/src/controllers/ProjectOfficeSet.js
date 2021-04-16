@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 class ProjectOfficeSet extends React.Component {
   constructor(props){
@@ -14,11 +15,6 @@ class ProjectOfficeSet extends React.Component {
     const { batteries, columns, elevators, floors} = this.state
     event.preventDefault()
     this.setValue(batteries, columns, elevators, floors);
-    // this.getTxStatus();
-    alert(`
-      ____Your Details____\n
-      Batteries : ${batteries}
-    `)
   }
 
   handleChange(event){
@@ -33,18 +29,25 @@ class ProjectOfficeSet extends React.Component {
   setValue (batteries, columns, elevators, floors) {
     const { drizzle, drizzleState } = this.props;
     const contract = drizzle.contracts.ProjectOffice;
-    console.log("New order SetValue");
-
+    
     // let drizzle know we want to call the `set` method with `value`
     const stackId = contract.methods["newOrder"].cacheSend(batteries, columns, elevators, floors, { from: drizzleState.accounts[0] });
 
-    // const stackId = contract.methods["newOrder"].cacheSend(batteries, columns, elevators, floors, { from: drizzleState.accounts[0] });
-    // const stackId = drizzle.contracts.ProjectOffice.methods.newOrder(batteries, columns, elevators, floors).send({from: drizzleState.accounts[0]})
     // save the `stackId` for later reference
-    console.log("StackId", stackId);
-    console.log(drizzleState);
     this.setState({ stackId });
-  };
+  }
+
+  saveTransactionAddress (transactionAddress){
+    axios.post('https://rocketblockchain.azurewebsites.net/api/blockchains',{ nodeName: 'ProjectOffice', address: transactionAddress })
+      .then(res => {
+        console.log("Response", res);
+        console.log("Response Data", res.data);
+      })
+      .catch(function(error){
+          console.log("ERROR",error);
+      });
+    console.log("End of saveTransactionAddress");
+  }
 
   getTxStatus = () => {
     console.log("getTxStatus");
@@ -59,30 +62,18 @@ class ProjectOfficeSet extends React.Component {
     // if transaction hash does not exist, don't display anything
     if (!txHash) return null;
 
+    
+    this.saveTransactionAddress(txHash);
+
+
     console.log("txHash", txHash);
     console.log("transactions[txHash]", transactions[txHash]);
     
     console.log("@@@@@@@",this.props.drizzle.web3.eth.getTransaction(transactionAddress).then(console.log));
 
-    // let transaction = this.props.drizzle.web3.eth.getTransaction(transactionAddress, function(err,tx){
-    //   let tx_data = tx.input;
-    //   console.log(tx_data);
-    // });
-    // console.log(this.props.drizzle.web3.toAscii('0x940d9e5d0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000007'));
-    // 0x940d9e5d0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000007
     
-    // console.log("EYLO", this.props.drizzle.web3.eth.getTransaction(transaction, function(err,tx){
-    //   let tx_data = tx.input;
-    //   let input_data = '0x' + tx_data.slice(10);    
-    //   let params = this.props.drizzle.web3.eth.abi.decodeParameters(['uint256','uint256','uint256','uint256','uint256','uint256'], input_data)
-    //   console.log("A--------------------------", params);
-    
-    // }));
-    // console.log("Drizzle web3", this.web3.eth.getTransactionReceipt(txHash).then(console.log));
-    // otherwise, return the transaction status
     return `Transaction Address: ${txHash}`
-    // return `Transaction status: ${transactions[txHash] && transactions[txHash].status}`;
-  };
+  }
 
   render() {
     return (
@@ -123,7 +114,7 @@ class ProjectOfficeSet extends React.Component {
           </div>
         </div>
       </form>
-    );
+    )
   }
 }
 
