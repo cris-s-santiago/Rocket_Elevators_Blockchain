@@ -5,7 +5,7 @@ class ProjectOfficeRead extends React.Component {
   state = {dataKeyNewOrder: null};
   componentDidMount() {
     const { drizzle, drizzleState } = this.props;
-    const contract = drizzle.contracts.MyStringStore;
+    const contract = drizzle.contracts.ProjectOffice;
     console.log("================================");
     console.log(drizzle);
     console.log("----------------");
@@ -13,8 +13,8 @@ class ProjectOfficeRead extends React.Component {
 
     console.log("Transactions",drizzleState.transactions);
 
-    console.log("My string store",drizzle.contracts.MyStringStore);
-    console.log("My contract address",drizzle.contracts.MyStringStore.address);
+    console.log("My string store",drizzle.contracts.ProjectOffice);
+    console.log("My contract address",drizzle.contracts.ProjectOffice.address);
     console.log("Contracts",this.props.drizzleState.contracts);
 
     // let drizzle know we want to watch the `myString` method
@@ -32,14 +32,14 @@ class ProjectOfficeRead extends React.Component {
 
   render() {
     // get the contract state from drizzleState
-    const { MyStringStore } = this.props.drizzleState.contracts;
+    const { ProjectOffice } = this.props.drizzleState.contracts;
 
     // using the saved `dataKey`, get the variable we're interested in
-    // const batteries = MyStringStore.batteries[this.state.dataKeyBattery];
-    // const columns = MyStringStore.columns[this.state.dataKeyColumns];
-    // const elevators = MyStringStore.elevators[this.state.dataKeyElevators];
-    // const floors = MyStringStore.floors[this.state.dataKeyFloors];
-    // const test = MyStringStore.test[this.state.test];
+    // const batteries = ProjectOffice.batteries[this.state.dataKeyBattery];
+    // const columns = ProjectOffice.columns[this.state.dataKeyColumns];
+    // const elevators = ProjectOffice.elevators[this.state.dataKeyElevators];
+    // const floors = ProjectOffice.floors[this.state.dataKeyFloors];
+    // const test = ProjectOffice.test[this.state.test];
 
     // if it exists, then we display its value
     return (

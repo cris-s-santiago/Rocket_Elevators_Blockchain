@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import ProjectOfficeRead from "./controllers/ProjectOfficeRead";
 import ProjectOfficeSet from "./controllers/ProjectOfficeSet";
+import MaterialProviderSet from "./controllers/MaterialProviderSet";
+import MaterialProviderRead from "./controllers/MaterialProviderRead";
+import SolutionManufacturingRead from "./controllers/SolutionManufacturingRead";
+import SolutionManufacturingSet from "./controllers/SolutionManufacturingSet";
+import QualitySecuritySet from "./controllers/QualitySecuritySet";
+import QualitySecurityRead from "./controllers/QualitySecurityRead";
 import "./App.css";
-
-
 
 class App extends Component {
   state = { loading: true, drizzleState: null };
@@ -22,6 +26,8 @@ class App extends Component {
         this.setState({ loading: false, drizzleState });
       }
     });
+
+    console.log("Drizzle web3", drizzle);
 
 		// adding scripts
 		const script1 = document.createElement("script");
@@ -59,11 +65,34 @@ class App extends Component {
         <h1 className ="display-3">ROCKET ELEVATORS BLOCKCHAIN</h1>
       </nav>
       <div className="App">
-        <ProjectOfficeSet
-          drizzle={this.props.drizzle}
+        <ProjectOfficeSet drizzle={this.props.drizzle}
           drizzleState={this.state.drizzleState}
         />
         <ProjectOfficeRead
+          drizzle={this.props.drizzle}
+          drizzleState={this.state.drizzleState}
+        />
+        <MaterialProviderSet
+          drizzle={this.props.drizzle}
+          drizzleState={this.state.drizzleState}
+        />
+        <MaterialProviderRead
+          drizzle={this.props.drizzle}
+          drizzleState={this.state.drizzleState}
+        />
+        <SolutionManufacturingSet
+          drizzle={this.props.drizzle}
+          drizzleState={this.state.drizzleState}
+        />
+        <SolutionManufacturingRead
+          drizzle={this.props.drizzle}
+          drizzleState={this.state.drizzleState}
+        />
+        <QualitySecuritySet
+          drizzle={this.props.drizzle}
+          drizzleState={this.state.drizzleState}
+        />
+        <QualitySecurityRead
           drizzle={this.props.drizzle}
           drizzleState={this.state.drizzleState}
         />

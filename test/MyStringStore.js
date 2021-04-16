@@ -1,8 +1,8 @@
-const MyStringStore = artifacts.require("./MyStringStore.sol");
+const ProjectOffice = artifacts.require("./ProjectOffice.sol");
 
-contract("MyStringStore", accounts => {
+contract("ProjectOffice", accounts => {
   it("should store the string 'Hey there!'", async () => {
-    const myStringStore = await MyStringStore.deployed();
+    const myStringStore = await ProjectOffice.deployed();
 
     // Set myString to "Hey there!"
     await myStringStore.set("Hey there!", { from: accounts[0] });

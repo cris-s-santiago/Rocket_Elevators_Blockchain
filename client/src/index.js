@@ -2,16 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 
-// import drizzle functions and contract artifact
 import { Drizzle } from "@drizzle/store";
-//import ProjectOfficeRead from "./contracts/ProjectOfficeRead.json";
-import MyStringStore from "./contracts/MyStringStore.json";
+
+import ProjectOffice from "./contracts/ProjectOffice.json";
+import MaterialProvider from "./contracts/MaterialProvider.json";
+import SolutionManufacturing from "./contracts/SolutionManufacturing.json";
+import QualitySecurity from "./contracts/QualitySecurity.json";
 
 // let drizzle know what contracts we want and how to access our test blockchain
 const options = {
-	contracts: [MyStringStore],
+	contracts: [ProjectOffice, MaterialProvider, SolutionManufacturing, QualitySecurity],
 	web3: {
 		fallback: {
 			type: "ws",
@@ -23,9 +24,8 @@ const options = {
 // setup drizzle
 const drizzle = new Drizzle(options);
 
-ReactDOM.render(<App drizzle={drizzle} />, document.getElementById("root"));
+// const Web3Eth = require('web3-eth');
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// const eth = new Web3Eth('ws://192.168.2.17:7545');
+
+ReactDOM.render(<App drizzle={drizzle} />, document.getElementById("root"));

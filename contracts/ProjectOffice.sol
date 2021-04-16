@@ -1,4 +1,4 @@
-//pragma solidity >=0.7.0 <0.9.0;
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.5.0;
 
 contract ProjectOffice {
@@ -11,20 +11,6 @@ contract ProjectOffice {
         uint256 amountOfButtons;
         uint256 amountOfDisplays;
         uint256 amountOfSpeakers;
-    }
-    uint public batteriesData = 30;
-    uint public columnsData = 25;
-    uint public elevatorsData = 0;
-    
-    uint public floorsData = 0;
-
-    function setData(uint256 a, uint256 b, uint256 c, uint256 d) public {
-      batteriesData = a;
-      columnsData = b;
-      columnsData = c;
-      floorsData = d;
-
-      newOrder(batteriesData, columnsData, columnsData, floorsData);
     }
 
     bytes32[] public orderIndex;
