@@ -91,37 +91,37 @@ class MaterialProviderSet extends React.Component {
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Controllers: </div>{" "}
-                  <input type="text" name="controllers"  value = {this.state.controllers} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="controllers"  value = {this.state.controllers} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Shafts: </div>{" "}
-                  <input type="text" name="shafts"  value = {this.state.shafts} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="shafts"  value = {this.state.shafts} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Doors: </div>{" "}
-                  <input type="text" name="doors"  value = {this.state.doors} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="doors"  value = {this.state.doors} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Buttons: </div>{" "}
-                  <input type="text" name="buttons"  value = {this.state.buttons} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="buttons"  value = {this.state.buttons} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Displays: </div>{" "}
-                  <input type="text" name="displays"  value = {this.state.displays} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="displays"  value = {this.state.displays} onChange={this.handleChange}/>
                 </div>
             </li>
             <li className="list-group-item">
                 <div className="row">
                   <div className="col-6">Speakers: </div>{" "}
-                  <input type="text" name="speakers"  value = {this.state.speakers} onChange={this.handleChange}/>
+                  <input type="number" min="0" name="speakers"  value = {this.state.speakers} onChange={this.handleChange}/>
                 </div>
             </li>
           </ul>

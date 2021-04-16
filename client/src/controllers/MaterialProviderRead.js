@@ -1,62 +1,68 @@
 import React from "react";
 
 class MaterialProviderRead extends React.Component {
-  // state = { dataKeyBattery: null,dataKeyColumns: null, dataKeyElevators: null, dataKeyFloors: null, test: null};
-  state = {dataKeyNewOrder: null};
+  state = {dataKeyalumBars: null, dataKeysteelSheets: null, dataKeyrubberBands: null, dataKeylightBulbs: null, dataKeyleds: null, dataKeyspringsProvider: null, dataKeyspeakersProvider: null};
+  
   componentDidMount() {
-    const { drizzle, drizzleState } = this.props;
-    const contract = drizzle.contracts.MaterialProvider;
-    console.log("================================");
-    console.log(drizzle);
-    console.log("----------------");
-    console.log(drizzleState);
+		const { drizzle } = this.props;
+		const contract = drizzle.contracts.MaterialProvider;
 
-    console.log("Transactions",drizzleState.transactions);
+		// let drizzle know we want to watch the `myString` method
+		const dataKeyalumBars = contract.methods["alumBars"].cacheCall();
+    const dataKeysteelSheets = contract.methods["steelSheets"].cacheCall();
+    const dataKeyrubberBands = contract.methods["rubberBands"].cacheCall();
+    const dataKeylightBulbs = contract.methods["lightBulbs"].cacheCall();
+    const dataKeyleds = contract.methods["leds"].cacheCall();
+    const dataKeyspringsProvider = contract.methods["springsProvider"].cacheCall();
+    const dataKeyspeakersProvider = contract.methods["speakersProvider"].cacheCall();
 
-    console.log("My string store",drizzle.contracts.MaterialProvider);
-    console.log("My contract address",drizzle.contracts.MaterialProvider.address);
-    console.log("Contracts",this.props.drizzleState.contracts);
+		// save the `dataKey` to local component state for later reference
+		this.setState({ dataKeyalumBars, dataKeysteelSheets, dataKeyrubberBands, dataKeylightBulbs, dataKeyleds, dataKeyspringsProvider, dataKeyspeakersProvider });
+	}
 
-  }
+	render() {
+		// get the contract state from drizzleState
+		const { MaterialProvider } = this.props.drizzleState.contracts;
 
-  render() {
-    // get the contract state from drizzleState
-    const { MaterialProvider } = this.props.drizzleState.contracts;
+		// using the saved `dataKey`, get the variable we're interested in
+		const alumBars = MaterialProvider.alumBars[this.state.dataKeyalumBars];
+    const steelSheets = MaterialProvider.steelSheets[this.state.dataKeysteelSheets];
+    const rubberBands = MaterialProvider.rubberBands[this.state.dataKeyrubberBands];
+    const lightBulbs = MaterialProvider.lightBulbs[this.state.dataKeylightBulbs];
+    const leds = MaterialProvider.leds[this.state.dataKeyleds];
+    const springsProvider = MaterialProvider.springsProvider[this.state.dataKeyspringsProvider];
+    const speakersProvider = MaterialProvider.speakersProvider[this.state.dataKeyspeakersProvider];
 
-    // using the saved `dataKey`, get the variable we're interested in
-    // const batteries = MaterialProvider.batteries[this.state.dataKeyBattery];
-    // const columns = MaterialProvider.columns[this.state.dataKeyColumns];
-    // const elevators = MaterialProvider.elevators[this.state.dataKeyElevators];
-    // const floors = MaterialProvider.floors[this.state.dataKeyFloors];
-    // const test = MaterialProvider.test[this.state.test];
-
-    // if it exists, then we display its value
-    return (
-      <div className="container">
+		// if it exists, then we display its value
+		return (
+			<div className="container">
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">Controllers</th>
-              <th scope="col">Shafts</th>
-              <th scope="col">Doors</th>
-              <th scope="col">Buttons</th>
-              <th scope="col">Displays</th>
+              <th scope="col">Aluminum bars</th>
+              <th scope="col">Stainless steel sheets</th>
+              <th scope="col">Springs </th>
+              <th scope="col">Bumper rubber bands</th>
+              <th scope="col">Interior light bulbs</th>
+              <th scope="col">Display LEDs</th>
               <th scope="col">Speakers</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              {/* <td>{batteries && batteries.value}</td>
-              <td>{columns && columns.value}</td>
-              <td>{elevators && elevators.value}</td>
-              <td>{floors && floors.value}</td> */}
-              {/* <td>{test && test.value}</td> */}
+              <td>{alumBars && alumBars.value}</td>
+              <td>{steelSheets && steelSheets.value}</td>
+              <td>{rubberBands && rubberBands.value}</td>
+              <td>{lightBulbs && lightBulbs.value}</td>
+              <td>{leds && leds.value}</td>
+              <td>{springsProvider && springsProvider.value}</td>
+              <td>{speakersProvider && speakersProvider.value}</td>
             </tr>
           </tbody>
         </table>
       </div>
 		);
-  }
+	}
 }
 
 export default MaterialProviderRead;

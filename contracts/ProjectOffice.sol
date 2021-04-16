@@ -3,6 +3,13 @@ pragma solidity >=0.5.0;
 
 contract ProjectOffice {
 
+    uint256 public Controllers = 0;
+    uint256 public Shafts = 0;
+    uint256 public Doors = 0;
+    uint256 public Buttons = 0;
+    uint256 public Displays = 0;
+    uint256 public Speakers = 0;
+
    // List of components
     struct ComponentStruct {
         uint256 amountOfShafts;
@@ -26,12 +33,19 @@ contract ProjectOffice {
         uint totalElevators = elevators*totalColumns;
         uint id = orderCount++;
 
-        componentStructs[id].amountOfShafts = totalElevators;
+        componentStructs[id].amountOfShafts = totalElevators;        
         componentStructs[id].amountOfControllers = batteries;
         componentStructs[id].amountOfDoors = totalElevators*2;
         componentStructs[id].amountOfButtons = floors*totalElevators;
         componentStructs[id].amountOfDisplays = floors+totalElevators;
         componentStructs[id].amountOfSpeakers = (totalElevators*2)+floors;
+
+        Shafts = componentStructs[id].amountOfShafts;
+        Controllers = componentStructs[id].amountOfControllers;
+        Doors = componentStructs[id].amountOfDoors;
+        Buttons = componentStructs[id].amountOfButtons;
+        Displays = componentStructs[id].amountOfDisplays;
+        Speakers = componentStructs[id].amountOfSpeakers;
 
         return (componentStructs[id].amountOfShafts,componentStructs[id].amountOfControllers,componentStructs[id].amountOfDoors,componentStructs[id].amountOfButtons,componentStructs[id].amountOfDisplays,componentStructs[id].amountOfSpeakers);
     }

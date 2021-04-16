@@ -1,49 +1,39 @@
 import React from "react";
 
 class ProjectOfficeRead extends React.Component {
-  // state = { dataKeyBattery: null,dataKeyColumns: null, dataKeyElevators: null, dataKeyFloors: null, test: null};
-  state = {dataKeyNewOrder: null};
-  componentDidMount() {
-    const { drizzle, drizzleState } = this.props;
-    const contract = drizzle.contracts.ProjectOffice;
-    console.log("================================");
-    console.log(drizzle);
-    console.log("----------------");
-    console.log(drizzleState);
+	state = { dataKeyControllers: null, dataKeyShafts: null, dataKeyDoors: null, dataKeyButtons: null, dataKeyDisplays: null, dataKeySpeakers: null };
 
-    console.log("Transactions",drizzleState.transactions);
+	componentDidMount() {
+		const { drizzle } = this.props;
+		const contract = drizzle.contracts.ProjectOffice;
 
-    console.log("My string store",drizzle.contracts.ProjectOffice);
-    console.log("My contract address",drizzle.contracts.ProjectOffice.address);
-    console.log("Contracts",this.props.drizzleState.contracts);
+		// let drizzle know we want to watch the `myString` method
+		const dataKeyControllers = contract.methods["Controllers"].cacheCall();
+    const dataKeyShafts = contract.methods["Shafts"].cacheCall();
+    const dataKeyDoors = contract.methods["Doors"].cacheCall();
+    const dataKeyButtons = contract.methods["Buttons"].cacheCall();
+    const dataKeyDisplays = contract.methods["Displays"].cacheCall();
+    const dataKeySpeakers = contract.methods["Speakers"].cacheCall();
 
-    // let drizzle know we want to watch the `myString` method
-    // const dataKeyBattery = contract.methods["batteries"].cacheCall();
-    // const dataKeyColumns = contract.methods["columns"].cacheCall();
-    // const dataKeyElevators = contract.methods["elevators"].cacheCall();
-    // const dataKeyFloors = contract.methods["floors"].cacheCall();
-    // const dataKeyNewOrder = contract.methods["newOrder"].cacheCall(1,2,3,4);
-    // const dataKeyNewOrder = contract.methods.newOrder.cacheCall();
-    // save the `dataKey` to local component state for later reference
-    // this.setState({ dataKeyBattery, dataKeyColumns, dataKeyElevators,dataKeyFloors});
-    // this.setState({ dataKeyNewOrder });
+		// save the `dataKey` to local component state for later reference
+		this.setState({ dataKeyControllers, dataKeyShafts, dataKeyDoors, dataKeyButtons, dataKeyDisplays, dataKeySpeakers });
+	}
 
-  }
+	render() {
+		// get the contract state from drizzleState
+		const { ProjectOffice } = this.props.drizzleState.contracts;
 
-  render() {
-    // get the contract state from drizzleState
-    const { ProjectOffice } = this.props.drizzleState.contracts;
+		// using the saved `dataKey`, get the variable we're interested in
+		const controllers = ProjectOffice.Controllers[this.state.dataKeyControllers];
+    const shafts = ProjectOffice.Shafts[this.state.dataKeyShafts];
+    const doors = ProjectOffice.Doors[this.state.dataKeyDoors];
+    const buttons = ProjectOffice.Buttons[this.state.dataKeyButtons];
+    const displays = ProjectOffice.Displays[this.state.dataKeyDisplays];
+    const speakers = ProjectOffice.Speakers[this.state.dataKeySpeakers];
 
-    // using the saved `dataKey`, get the variable we're interested in
-    // const batteries = ProjectOffice.batteries[this.state.dataKeyBattery];
-    // const columns = ProjectOffice.columns[this.state.dataKeyColumns];
-    // const elevators = ProjectOffice.elevators[this.state.dataKeyElevators];
-    // const floors = ProjectOffice.floors[this.state.dataKeyFloors];
-    // const test = ProjectOffice.test[this.state.test];
-
-    // if it exists, then we display its value
-    return (
-      <div className="container">
+		// if it exists, then we display its value
+		return (
+			<div className="container">
         <table className="table">
           <thead>
             <tr>
@@ -57,17 +47,18 @@ class ProjectOfficeRead extends React.Component {
           </thead>
           <tbody>
             <tr>
-              {/* <td>{batteries && batteries.value}</td>
-              <td>{columns && columns.value}</td>
-              <td>{elevators && elevators.value}</td>
-              <td>{floors && floors.value}</td> */}
-              {/* <td>{test && test.value}</td> */}
+              <td>{controllers && controllers.value}</td>
+              <td>{shafts && shafts.value}</td>
+              <td>{doors && doors.value}</td>
+              <td>{buttons && buttons.value}</td>
+              <td>{displays && displays.value}</td>
+              <td>{speakers && speakers.value}</td>
             </tr>
           </tbody>
         </table>
       </div>
 		);
-  }
+	}
 }
 
 export default ProjectOfficeRead;
