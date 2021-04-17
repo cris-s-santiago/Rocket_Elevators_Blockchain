@@ -42,6 +42,7 @@ class ProjectOfficeSet extends React.Component {
       .then(res => {
         console.log("Response", res);
         console.log("Response Data", res.data);
+        this.refreshPage();
       })
       .catch(function(error){
           console.log("ERROR",error);
@@ -49,31 +50,29 @@ class ProjectOfficeSet extends React.Component {
     console.log("End of saveTransactionAddress");
   }
 
+  refreshPage(){
+    window.location.reload();
+  }
+
   getTxStatus = () => {
-    console.log("getTxStatus");
     // get the transaction states from the drizzle state
     const { transactions, transactionStack } = this.props.drizzleState;
 
     // get the transaction hash using our saved `stackId`
     const txHash = transactionStack[this.state.stackId];
 
-    var transactionAddress = '0x5ec9260523a370aab3c0f3e6c850c6270bcb2eda065cd28fd974980d3056c915';
-    // if (!txHash) console.log("NULL");
     // if transaction hash does not exist, don't display anything
     if (!txHash) return null;
+    if (transactions[txHash] == null) return null;
 
+    this.setState({stackId: null});
     
-    this.saveTransactionAddress(txHash);
-
-
-    console.log("txHash", txHash);
-    console.log("transactions[txHash]", transactions[txHash]);
-    
-    console.log("@@@@@@@",this.props.drizzle.web3.eth.getTransaction(transactionAddress).then(console.log));
-
-    
+    if (txHash.length > 32){
+      this.saveTransactionAddress(txHash);
+    }
+    // otherwise, return the transaction status
     return `Transaction Address: ${txHash}`
-  }
+  };
 
   render() {
     return (

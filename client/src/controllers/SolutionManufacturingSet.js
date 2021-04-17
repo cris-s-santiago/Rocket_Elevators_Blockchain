@@ -44,6 +44,7 @@ class SolutionManufacturingSet extends React.Component {
       .then(res => {
         console.log("Response", res);
         console.log("Response Data", res.data);
+        this.refreshPage();
       })
       .catch(function(error){
           console.log("ERROR",error);
@@ -51,19 +52,26 @@ class SolutionManufacturingSet extends React.Component {
     console.log("End of saveTransactionAddress");
   }
 
+  refreshPage(){
+    window.location.reload();
+  }
+
   getTxStatus = () => {
-    console.log("getTxStatus");
     // get the transaction states from the drizzle state
     const { transactions, transactionStack } = this.props.drizzleState;
 
     // get the transaction hash using our saved `stackId`
     const txHash = transactionStack[this.state.stackId];
+
     // if transaction hash does not exist, don't display anything
     if (!txHash) return null;
+    if (transactions[txHash] == null) return null;
 
-    console.log("txHash", txHash);
-    console.log("transactions[txHash]", transactions[txHash]);
-    this.saveTransactionAddress(txHash);
+    this.setState({stackId: null});
+    
+    if (txHash.length > 32){
+      this.saveTransactionAddress(txHash);
+    }
     // otherwise, return the transaction status
     return `Transaction Address: ${txHash}`
   }
