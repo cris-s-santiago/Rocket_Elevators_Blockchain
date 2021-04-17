@@ -52,11 +52,16 @@ class ProjectOfficeSet extends React.Component {
       .then(res => {
         console.log("Response", res);
         console.log("Response Data", res.data);
+        this.refreshPage();
       })
       .catch(function(error){
           console.log("ERROR",error);
       });
     console.log("End of saveTransactionAddress");
+  }
+
+  refreshPage(){
+    window.location.reload();
   }
 
   getTxStatus = () => {
@@ -77,7 +82,6 @@ class ProjectOfficeSet extends React.Component {
       this.saveTransactionAddress(txHash);
     }
     console.log("prop",this.props.drizzle.web3.eth.getTransactionReceipt(txHash));
-    console.log(transactions[txHash][0]);
     console.log("txHash", txHash);
     console.log("transactions[txHash]", transactions[txHash]);
     // console.log(transactions[txHash]['status']);
@@ -88,11 +92,10 @@ class ProjectOfficeSet extends React.Component {
     return `Transaction Address: ${txHash}`
   };
 
-
-
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
+        <div>{this.getTxStatus()}</div>
         <div className="container">
           <div className="card" >
           <div className="card-header">
@@ -127,7 +130,6 @@ class ProjectOfficeSet extends React.Component {
           <button className="btn btn-primary" type="submit">Submit</button>
           </div>
         </div>
-        <div>{this.getTxStatus()}</div>
       </form>
     );
   }
